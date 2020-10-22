@@ -1,0 +1,73 @@
+&star_job
+
+!      create_pre_main_sequence_model = .true.
+      save_model_when_terminate = .true.
+      save_model_filename = 'final.mod'
+      write_profile_when_terminate = .true.
+      filename_for_profile_when_terminate = 'final_profile.data'
+      kappa_file_prefix = 'gs98'
+!      change_initial_net = .true.
+!      new_net_name = 'pp_extras.net'
+
+      change_net = .true.
+      new_net_name = 'pp_cno_c13.net'
+      change_initial_net = .true.
+      set_rate_c12ag = 'NACRE'
+
+      pre_ms_relax_num_steps = 100
+      pgstar_flag = .true.
+
+/ ! end of star_job namelist
+
+&controls
+
+      ! check for retries and backups as part of test_suite
+      ! you can/should delete this for use outside of test_suite
+      max_number_backups = 200
+      max_number_retries = 500
+      max_model_number = 4000
+
+      initial_mass = 1.4
+      initial_z = 0.02d0
+
+      Zbase = 0.02d0
+
+      photosphere_r_upper_limit = 151.5032 ! 0.1 UA
+
+      use_dedt_form_of_energy_eqn = .true.
+      mesh_delta_coeff = 0.3
+      varcontrol_target = 1d-3
+
+      history_interval = 1
+      profile_interval = 5
+      max_num_profile_models = 1000
+      terminal_interval = 10
+      write_header_frequency = 10
+
+/ ! end of controls namelist
+
+&pgstar
+
+      Grid6_win_flag = .true.
+      Grid6_win_width = 11
+
+      Grid6_file_dir = 'png'
+      Grid6_file_prefix = 'grid6_'
+      Grid6_file_interval = 5 ! output when mod(model_number,Grid6_file_interval)==0
+      Grid6_file_width = -1 ! (inches) negative means use same value as for window
+      Grid6_file_aspect_ratio = -1 ! negative means use same value as for window
+
+      Summary_Burn_xaxis_name = 'mass'
+      Summary_Burn_xaxis_reversed = .false.
+      Summary_Burn_xmin = 0.00 ! -101d0 ! only used if /= -101d0
+      Summary_Burn_xmax = 2.1  ! only used if /= -101d0
+      Abundance_xaxis_name = 'mass'
+      Abundance_xaxis_reversed = .false.
+      ! power xaxis limits -- to override system default selections
+      Abundance_xmin = 0.00 ! -101d0 ! only used if /= -101d0
+      Abundance_xmax = -101d0 ! only used if /= -101d0
+      Abundance_log_mass_frac_min = -6 ! only used if < 0
+      Abundance_win_width = 9
+      Abundance_win_aspect_ratio = 0.75 ! aspect_ratio = height/width
+
+/ ! end of pgstar namelist
